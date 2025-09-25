@@ -144,4 +144,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 **Made with ❤️ for book lovers everywhere**
 
-[Live Demo](https://your-app-name.onrender.com) | [Report Bug](https://github.com/yourusername/bookclub/issues) | [Request Feature](https://github.com/yourusername/bookclub/issues)
+[Live Demo](https://allan6757.github.io/BOOK-CLUB254/) | [Report Bug](https://github.com/allan6757/BOOK-CLUB254/issues) | [Request Feature](https://github.com/allan6757/BOOK-CLUB254/issues)
