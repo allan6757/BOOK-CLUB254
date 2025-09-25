@@ -29,36 +29,53 @@ export const AuthProvider = ({ children }) => {
     setLoading(false);
   }, []);
 
-  const login = async (email) => {
-    // Mock login - create user from email
-    const mockUser = {
-      id: Date.now(),
-      username: email.split('@')[0],
-      email: email
-    };
+  const login = async (email, password) => {
+    const response = await fetch(`${API_BASE_URL}/api/login`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, password }),
+    });
     
-    setUser(mockUser);
-    localStorage.setItem('user', JSON.stringify(mockUser));
-    return { user: mockUser };
+    const data = await response.json();
+    
+    if (!response.ok) {
+      throw new Error(data.error || 'Login failed');
+    }
+    
+    setUser(data.user);
+    localStorage.setItem('user', JSON.stringify(data.user));
+    return data;
   };
 
   const signup = async (userData) => {
-    // Mock signup - create user from form data
-    const mockUser = {
-      id: Date.now(),
-      username: userData.username,
-      email: userData.email
-    };
+    const response = await fetch(`${API_BASE_URL}/api/users`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(userData),
+    });
     
-    setUser(mockUser);
-    localStorage.setItem('user', JSON.stringify(mockUser));
-    return { user: mockUser };
+    const data = await response.json();
+    
+    if (!response.ok) {
+      throw new Error(data.error || 'Signup failed');
+    }
+    
+    setUser(data);
+    localStorage.setItem('user', JSON.stringify(data));
+    return { user: data };
   };
 
   const logout = () => {
     setUser(null);
     setUserPreferences(null);
     localStorage.removeItem('user');
+    if (user?.id) {
+      localStorage.removeItem(`userPreferences_${user.id}`);
+    }
   };
 
   const savePreferences = (preferences) => {

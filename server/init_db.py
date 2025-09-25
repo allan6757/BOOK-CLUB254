@@ -15,6 +15,7 @@ def init_database():
         # Create sample user
         if not User.query.first():
             user = User(username='demo', email='demo@example.com')
+            user.set_password('password123')  # Default password for demo user
             db.session.add(user)
             db.session.commit()
         

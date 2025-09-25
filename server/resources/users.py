@@ -9,14 +9,19 @@ class UserListResource(Resource):
     def post(self):
         data = request.get_json()
         
-        if not data or 'username' not in data or 'email' not in data:
-            return {'error': 'Username and email are required'}, 400
+        if not data or 'username' not in data or 'email' not in data or 'password' not in data:
+            return {'error': 'Username, email and password are required'}, 400
+            
+        # Check if user already exists
+        if User.query.filter_by(email=data['email']).first():
+            return {'error': 'User with this email already exists'}, 400
             
         try:
             user = User(
                 username=data['username'],
                 email=data['email']
             )
+            user.set_password(data['password'])
             db.session.add(user)
             db.session.commit()
             return user.to_dict(), 201
@@ -75,21 +80,11 @@ class LoginResource(Resource):
     def post(self):
         data = request.get_json()
         
-        if not data or 'email' not in data:
-            return {'error': 'Email is required'}, 400
+        if not data or 'email' not in data or 'password' not in data:
+            return {'error': 'Email and password are required'}, 400
             
         user = User.query.filter_by(email=data['email']).first()
-        if not user:
-            # Create user if doesn't exist (simple auth)
-            try:
-                user = User(
-                    username=data['email'].split('@')[0],
-                    email=data['email']
-                )
-                db.session.add(user)
-                db.session.commit()
-            except Exception as e:
-                db.session.rollback()
-                return {'error': 'Failed to create user'}, 500
+        if not user or not user.check_password(data['password']):
+            return {'error': 'Invalid email or password'}, 401
         
         return {'user': user.to_dict(), 'message': 'Login successful'}, 200
