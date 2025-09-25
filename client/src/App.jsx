@@ -6,6 +6,7 @@ import NavBar from './components/NavBar';
 import Home from './pages/Home';
 import About from './pages/About';
 import BookPage from './pages/BookPage';
+import BookEdit from './pages/BookEdit';
 import MyList from './pages/MyList';
 import Favorites from './pages/Favorites';
 import Friends from './pages/Friends';
@@ -35,6 +36,7 @@ const AppContent = () => {
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/books/:id" element={<BookPage />} />
+          <Route path="/books/:id/edit" element={<BookEdit />} />
           <Route path="/my-list" element={<MyList />} />
           <Route path="/favorites" element={<Favorites />} />
           <Route path="/friends" element={<Friends />} />

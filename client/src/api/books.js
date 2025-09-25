@@ -25,6 +25,8 @@ export const fetchBook = async (id) => {
   }
 };
 
+export const getBook = fetchBook;
+
 export const createBook = async (bookData) => {
   const response = await fetch(`${API_BASE}/books`, {
     method: 'POST',
@@ -45,6 +47,16 @@ export const updateBook = async (id, bookData) => {
     body: JSON.stringify(bookData)
   });
   if (!response.ok) throw new Error('Failed to update book');
+  return response.json();
+};
+
+export const patchBook = async (id, bookData) => {
+  const response = await fetch(`${API_BASE}/books/${id}`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(bookData)
+  });
+  if (!response.ok) throw new Error('Failed to patch book');
   return response.json();
 };
 
