@@ -1,4 +1,5 @@
-const API_BASE = '/api';
+import { API_BASE_URL } from '../config/api';
+const API_BASE = `${API_BASE_URL}/api`;
 
 export const fetchFavorites = async () => {
   try {
