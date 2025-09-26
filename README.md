@@ -1,4 +1,4 @@
-# 📚 BookVerse Library
+# 📚 B(oo)kWormz Library
 
 A modern, full-stack book club application with React frontend and Flask backend featuring a beautiful glass morphism design and interactive animations.
 
